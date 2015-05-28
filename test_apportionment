@@ -1,0 +1,39 @@
+#!/usr/local/bin/ruby
+$: << "#{ENV['HOME']}/apportionment"
+
+require 'apportionment'
+
+# For testing, the following values should give no output when used
+# with Apportionment::EqualProportions as these are the numbers used
+# to apportion the House for the 2010 census.
+house_seats = 435
+populations = Apportionment::Data::CENSUS_2010_ENUM
+
+# populations = Apportionment::Data::CENSUS_2014_EST
+#
+# Supposing PR were admitted as a state, the normal way this has been
+# for the past century is to temporarily increase the size of the House
+# until the next census.  On the basis of its current population, PR
+# would be entitled to 5 seats, so that would mean increasing the House
+# to 440 seats.
+#
+# populations = populations.merge(Apportionment::Data::CENSUS_2014_PR)
+# house_seats += 5
+
+# Assume the same deal would apply to any measure giving DC an actual
+# voting seat in the House....
+# populations = populations.merge(Apportionment::Data::CENSUS_2014_DC)
+# house_seats += 1
+
+result = Apportionment::EqualProportions.new(house_seats, populations)
+result.seats.keys.sort.each do |st|
+  cnt = result.seats[st]
+  old = Apportionment::Data::SEATS_2010
+  if not old.has_key?(st)
+    puts "#{st} was not represented in Congress for Census 2010, now has #{cnt} seats"
+  elsif cnt < old[st]
+    puts "#{st} loses #{old[st] - cnt} seats (was #{old[st]}, now #{cnt})"
+  elsif cnt > old[st]
+    puts "#{st} gains #{cnt - old[st]} seats (was #{old[st]}, now #{cnt})"
+  end
+end

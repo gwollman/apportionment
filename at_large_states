@@ -1,0 +1,18 @@
+#!/usr/local/bin/ruby
+$: << "#{ENV['HOME']}/apportionment"
+
+require 'apportionment'
+
+at_large = Apportionment::Data::SEATS_2010.find_all {|k,v| v == 1}.
+  map {|x| x.first}.sort
+at_large.each do |state|
+  437.upto(999).each do |house_seats|
+    next if house_seats % 2 == 0
+    populations = Apportionment::Data::CENSUS_2014_EST
+    result = Apportionment::EqualProportions.new(house_seats, populations)
+    if result.seats[state] > 1
+      puts "#{house_seats} required to give #{state} a second seat"
+      break
+    end
+  end
+end
