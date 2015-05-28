@@ -253,4 +253,35 @@ module Apportionment
       end
     end
   end
+
+  # Compare corresponding elements in two hashes as returned
+  # by #seats or #ec_seats.  Yields a state, the change in seats,
+  # and a boolean which is false if the state was not previously
+  # represented (used to calculate scenarios like Puerto Rico
+  # statehood).
+  def self.compare(old, curr, include_no_change = false)
+    curr.keys.sort.each do |st|
+      cnt = curr[st]
+      if not old.has_key?(st)
+	yield st, cnt, false
+      elsif cnt != old[st]
+	yield st, cnt - old[st], true
+      elsif include_no_change
+	yield st, 0, true
+      end
+    end
+  end
+
+  # A higher-level comparison function, for demonstration purposes
+  def self.compare_and_print(old, result, old_desc, body)
+    self.compare(old, result) do |st, change, flag|
+      if not flag
+	puts "#{st} was not represented in #{body} for #{old_desc}, now has #{change} seats"
+      elsif change < 0
+	puts "#{st} loses #{change.abs} seats (was #{old[st]}, now #{result[st]})"
+      elsif change > 0
+	puts "#{st} gains #{change} seats (was #{old[st]}, now #{result[st]})"
+      end
+    end
+  end
 end
