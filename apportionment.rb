@@ -240,9 +240,10 @@ module Apportionment
       end
       
       # Second, give the remaining seats single to each state in order
-      # by its remaining fractional seat.
+      # by the magnitude of its remaining fractional seat.  (NB: comparison
+      # function reversed!)
       priority = fractional_seats.keys.sort do |a,b|
-	fractional_seats[a] <=> fractional_seats[b]
+	fractional_seats[b] <=> fractional_seats[a]
       end
       current_seat.upto(nseats - 1).each do |dummy|
 	st = priority.shift
