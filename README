@@ -2,3 +2,22 @@ Ruby code to implement post-census Congressional apportionment
 according to current and previous US law.
 
 Copyright 2015, Garrett A. Wollman.  All rights reserved.
+
+What's in here
+--------------
+
+apportionment.rb   - library for computing apportionment by either the
+		     Equal Proportions method (current law) or the
+		     Fair Share (Hamilton) method; also includes some
+		     static data representing the 2010 Census, 2014
+		     population estimates, and the actual results of the
+		     2010 apportionment
+at_large_states    - computes how large the House of Representatives would
+		     need to be in order to give a second seat to each of 
+		     the states currently represented with a single
+		     (at-large) seat
+test_apportionment - test harness, uses Census 2010 data to compute the
+		     2010 apportionment and compares this to the actual
+		     results; follow comments to see changes in various
+		     scenarios (DC, PR statehood, 2014 census estimates,
+		     etc.)
