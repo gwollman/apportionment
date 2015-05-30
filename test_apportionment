@@ -1,5 +1,5 @@
 #!/usr/local/bin/ruby
-$: << "#{ENV['HOME']}/apportionment"
+$: << File.dirname($0)
 
 require 'apportionment'
 
