@@ -8,7 +8,7 @@ at_large = Apportionment::Data::SEATS_2010.find_all {|k,v| v == 1}.
 at_large.each do |state|
   437.upto(999).each do |house_seats|
     next if house_seats % 2 == 0
-    populations = Apportionment::Data::CENSUS_2014_EST
+    populations = Apportionment::Data::CENSUS_2010_ENUM
     result = Apportionment::EqualProportions.new(house_seats, populations)
     if result.seats[state] > 1
       puts "#{house_seats} required to give #{state} a second seat"
