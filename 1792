@@ -1,0 +1,83 @@
+#!/usr/local/bin/ruby
+$: << File.dirname($0)
+
+require 'apportionment'
+
+house_seats = 105
+CENSUS_1790_FREE = {'Connecticut' => 235_182,
+		    'Delaware' => 50_207,
+                    'Georgia' => 53_284,
+                    'Kentucky' => 61_247,
+                    'Massachusetts' => 475_327,
+                    'Maryland' => 216_692,
+                    'North Carolina' => 293_179,
+                    'New Hampshire' => 141_727,
+                    'New Jersey' => 172_716,
+                    'New York' => 318_796,
+                    'Pennsylvania' => 430_636,
+                    'Rhode Island' => 67_877,
+                    'South Carolina' => 141_979,
+                    'Virginia' => 454_983,
+                    'Vermont' => 82_553
+                   }.freeze
+CENSUS_1790_SLAVE = {'Connecticut' => 2_764,
+                     'Delaware' => 3_899,
+                     'Georgia' => 29_264,
+                     'Kentucky' => 12_430,
+                     'Massachusetts' => 0,
+                     'Maryland' => 103_036,
+                     'North Carolina' => 100_572,
+                     'New Hampshire' => 158,
+                     'New Jersey' => 11_423,
+                     'New York' => 21_324,
+                     'Pennsylvania' => 3_737,
+                     'Rhode Island' => 948,
+                     'South Carolina' => 107_094,
+                     'Virginia' => 292_627,
+                     'Vermont' => 16 #erroneous
+                    }.freeze
+SEATS_1792 = {'Connecticut' => 7,
+              'Delaware' => 1,
+              'Georgia' => 2,
+              'Kentucky' => 2,
+              'Maryland' => 8,
+              'Massachusetts' => 14,
+              'New Hampshire' => 4,
+              'New Jersey' => 5,
+              'New York' => 10,
+              'North Carolina' => 10,
+              'Pennsylvania' => 13,
+              'Rhode Island' => 2,
+              'South Carolina' => 6,
+              'Vermont' => 2,
+              'Virginia' => 19
+             }.freeze
+
+# Apply "three-fifths compromise"
+#populations = CENSUS_1790_FREE.keys.inject({}) {|a,k| 
+#  a[k] = CENSUS_1790_FREE[k] + 3 * CENSUS_1790_SLAVE[k] / 5
+#  a
+#}
+
+# If all persons were counted equally
+#populations = CENSUS_1790_FREE.keys.inject({}) {|a,k| 
+#  a[k] = CENSUS_1790_FREE[k] + CENSUS_1790_SLAVE[k]
+#  a
+#}
+
+# If only free persons were counted
+populations = CENSUS_1790_FREE
+
+old = SEATS_1792
+result = Apportionment::EqualProportions.new(house_seats, populations)
+Apportionment.compare_and_print(old, result.seats, 'Actual 1792', 'Congress')
+#puts result.seats.inspect
+
+de = result.seats["Delaware"] + 2
+va = result.seats["Virginia"] + 2
+puts "Electoral college representation:"
+printf "Delaware (%d electors): %.3f\n", de, populations["Delaware"]/de.to_f
+printf "Virginia (%d electors): %.3f\n", va, populations["Virginia"]/va.to_f
+printf "Ratio: %.3f\n", 
+       (populations["Virginia"]/va.to_f) / (populations["Delaware"]/de.to_f)
+
