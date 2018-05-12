@@ -21,3 +21,7 @@ test_apportionment - test harness, uses Census 2010 data to compute the
 		     results; follow comments to see changes in various
 		     scenarios (DC, PR statehood, 2014 census estimates,
 		     etc.)
+1792		   - recomputes the 1792 apportionment using current methods;
+		     follow comments to switch population counted from only
+		     freemen to all persons or 3/5 compromise (using 1792
+		     figures so Vermont and Kentucky are included)
