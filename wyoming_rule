@@ -14,7 +14,7 @@ populations = Apportionment::Data::CENSUS_2010_ENUM
 # populations = populations.merge(Apportionment::Data::CENSUS_2017_DC)
 
 # hey, thanks Ruby for making this trivial to figure
-total_us_pop = populations.values.inject(0) {|a,v| a + v}
+total_us_pop = populations.values.reduce(:+)
 smallest_state_pop = populations.values.min
 house_seats = total_us_pop.to_f / smallest_state_pop
 
