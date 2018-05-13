@@ -25,3 +25,9 @@ test_apportionment - test harness, uses Census 2010 data to compute the
 		     follow comments to switch population counted from only
 		     freemen to all persons or 3/5 compromise (using 1792
 		     figures so Vermont and Kentucky are included)
+wyoming_rule	   - some have suggested that the size of the House be
+		     adjusted automatically to make it proportional to
+		     the ratio of the total population to that of the
+		     smallest state (currently Wyoming); this script
+		     computes the size of the House and then does the
+		     apportionment, given the specified populations

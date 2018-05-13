@@ -1,0 +1,34 @@
+#!/usr/local/bin/ruby
+$: << File.dirname($0)
+
+require 'apportionment'
+
+# It's been suggested that the size of the House of Representatives
+# ought to be adjusted automatically so that the number of Reps tracks
+# the ratio of the national population to that of the smallest state.
+# This version of the script implements that calculation.
+
+populations = Apportionment::Data::CENSUS_2010_ENUM
+# populations = Apportionment::Data::CENSUS_2017_EST
+# populations = populations.merge(Apportionment::Data::CENSUS_2017_PR)
+# populations = populations.merge(Apportionment::Data::CENSUS_2017_DC)
+
+# hey, thanks Ruby for making this trivial to figure
+total_us_pop = populations.values.inject(0) {|a,v| a + v}
+smallest_state_pop = populations.values.min
+house_seats = total_us_pop.to_f / smallest_state_pop
+
+# If the number of seats would be even, round up to avoid ties.
+house_seats = house_seats.to_i
+if house_seats % 2 == 0
+  house_seats += 1
+end
+
+puts "Total US population is #{total_us_pop}."
+puts "The population of the smallest state is #{smallest_state_pop}."
+puts "Computing apportionment for a #{house_seats}-seat House."
+puts ""
+
+old = Apportionment::Data::SEATS_2010
+result = Apportionment::EqualProportions.new(house_seats, populations)
+Apportionment.compare_and_print(old, result.seats, 'Census 2010', 'Congress')
