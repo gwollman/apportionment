@@ -9,7 +9,7 @@ require 'apportionment'
 house_seats = 435
 populations = Apportionment::Data::CENSUS_2010_ENUM
 
-# populations = Apportionment::Data::CENSUS_2014_EST
+# populations = Apportionment::Data::CENSUS_2017_EST
 #
 # Supposing PR were admitted as a state, the normal way this has been
 # for the past century is to temporarily increase the size of the House
@@ -17,12 +17,12 @@ populations = Apportionment::Data::CENSUS_2010_ENUM
 # would be entitled to 5 seats, so that would mean increasing the House
 # to 440 seats.
 #
-# populations = populations.merge(Apportionment::Data::CENSUS_2014_PR)
+# populations = populations.merge(Apportionment::Data::CENSUS_2017_PR)
 # house_seats += 5
 
 # Assume the same deal would apply to any measure giving DC an actual
 # voting seat in the House....
-# populations = populations.merge(Apportionment::Data::CENSUS_2014_DC)
+# populations = populations.merge(Apportionment::Data::CENSUS_2017_DC)
 # house_seats += 1
 
 old = Apportionment::Data::SEATS_2010

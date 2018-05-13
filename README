@@ -9,7 +9,7 @@ What's in here
 apportionment.rb   - library for computing apportionment by either the
 		     Equal Proportions method (current law) or the
 		     Fair Share (Hamilton) method; also includes some
-		     static data representing the 2010 Census, 2014
+		     static data representing the 2010 Census, 2014 and 2017
 		     population estimates, and the actual results of the
 		     2010 apportionment
 at_large_states    - computes how large the House of Representatives would
