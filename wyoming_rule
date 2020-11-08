@@ -8,10 +8,10 @@ require 'apportionment'
 # the ratio of the national population to that of the smallest state.
 # This version of the script implements that calculation.
 
-populations = Apportionment::Data::CENSUS_2010_ENUM
-# populations = Apportionment::Data::CENSUS_2017_EST
-# populations = populations.merge(Apportionment::Data::CENSUS_2017_PR)
-# populations = populations.merge(Apportionment::Data::CENSUS_2017_DC)
+# populations = Apportionment::Data::CENSUS_2010_ENUM
+populations = Apportionment::Data::CENSUS_2019_EST
+populations = populations.merge(Apportionment::Data::CENSUS_2017_PR)
+populations = populations.merge(Apportionment::Data::CENSUS_2017_DC)
 
 # hey, thanks Ruby for making this trivial to figure
 total_us_pop = populations.values.reduce(:+)
