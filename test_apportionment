@@ -7,9 +7,9 @@ require 'apportionment'
 # with Apportionment::EqualProportions as these are the numbers used
 # to apportion the House for the 2010 census.
 house_seats = 435
-populations = Apportionment::Data::CENSUS_2010_ENUM
+#populations = Apportionment::Data::CENSUS_2010_ENUM
 
-# populations = Apportionment::Data::CENSUS_2017_EST
+populations = Apportionment::Data::CENSUS_2019_EST
 #
 # Supposing PR were admitted as a state, the normal way this has been
 # for the past century is to temporarily increase the size of the House
